@@ -1,81 +1,217 @@
-<section id="facoes" class="container">
-        <h2>Escolha seu Lado na Galáxia</h2>
-        <p class="subtitulo">Clique para dar o seu voto definitivo. Cuidado: o sistema detectará traidores!</p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universo Star Wars | Arquivos Oficiais</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sabre-linha"></div>
+
+    <header>
+        <div class="logo">STAR <span>WARS</span></div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#facoes">Alianças</a></li>
+                <li><a href="#mandalorian-artigos">Crônicas</a></li>
+                <li><a href="#desafio">Holocron</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="hero-blur"></div>
+        <div class="hero-conteudo">
+            <span class="tag-galatica">REGISTROS DA ORLA EXTERIOR</span>
+            <h1>A FORÇA DESPERTOU</h1>
+            <p>Explore dados criptografados, selecione sua facção no conselho e quebre a segurança dos antigos artefatos Sith e Jedi.</p>
+            <a href="#facoes" class="btn-principal">Iniciar Varredura</a>
+        </div>
+    </section>
+
+    <section id="facoes" class="container">
+        <div class="secao-cabecalho">
+            <h2>Escolha seu Lado na Galáxia</h2>
+            <p class="subtitulo">Sua assinatura biométrica selará seu destino. Escolhas não podem ser alteradas.</p>
+        </div>
         
         <div id="alerta-voto" class="alerta-sistema"></div>
 
         <div class="grid-facoes">
-            <div class="card card-faccao">
-                <img src="./image_82e01f.jpg" alt="Lado Luminoso - Yoda">
+            <div class="card card-faccao j-borda">
+                <div class="imagem-container">
+                    <img src="https://images.unsplash.com/photo-1613376023733-0a73315d9b06?auto=format&fit=crop&w=600&q=80" alt="Lado Luminoso - Filosofia Jedi">
+                    <div class="sabre-brilho jedi-neon"></div>
+                </div>
                 <div class="card-info">
                     <h3>Mestre Yoda</h3>
-                    <p>Siga o Caminho da Luz, da sabedoria e da harmonia cósmica com a Ordem Jedi.</p>
-                    <button class="btn-faccao btn-jedi" onclick="votarFaccao('jedi')">Votar no Yoda</button>
-                    <div class="votos-resultado" id="votos-jedi">Votos: --</div>
+                    <p>Caminho da sabedoria, do desapego e da harmonia cósmica. Defenda a paz na República através da Força.</p>
+                    <button class="btn-faccao btn-jedi" onclick="votarFaccao('jedi')">Prestar Juramento</button>
+                    <div class="votos-resultado" id="votos-jedi">Registros: --</div>
                 </div>
             </div>
 
-            <div class="card card-faccao">
-                <img src="./image_82dfa0.jpg" alt="Lado Sombrio - Darth Vader">
+            <div class="card card-faccao s-borda">
+                <div class="imagem-container">
+                    <img src="https://images.unsplash.com/photo-1501159599894-155982264a55?auto=format&fit=crop&w=600&q=80" alt="Lado Sombrio - Sith">
+                    <div class="sabre-brilho sith-neon"></div>
+                </div>
                 <div class="card-info">
                     <h3>Darth Vader</h3>
-                    <p>Abrace o poder absolutista, a paixão e o domínio implacável do Lado Sombrio.</p>
-                    <button class="btn-faccao btn-imperio" onclick="votarFaccao('vader')">Votar no Vader</button>
-                    <div class="votos-resultado" id="votos-vader">Votos: --</div>
+                    <p>Abrace o poder absoluto, o controle através da paixão e a ordem imutável imposta pelo Lado Sombrio.</p>
+                    <button class="btn-faccao btn-imperio" onclick="votarFaccao('vader')">Ceder ao Poder</button>
+                    <div class="votos-resultado" id="votos-vader">Registros: --</div>
                 </div>
             </div>
 
-            <div class="card card-faccao">
-                <img src="./image_82dfdb.png" alt="Mandalorianos">
+            <div class="card card-faccao m-borda">
+                <div class="imagem-container">
+                    <img src="https://images.unsplash.com/photo-1559827291-72ee739d0d9a?auto=format&fit=crop&w=600&q=80" alt="Cultura Mandaloriana">
+                    <div class="sabre-brilho mando-neon"></div>
+                </div>
                 <div class="card-info">
                     <h3>Os Mandalorianos</h3>
-                    <p>Guerreiros de elite focados em honra, clã e na tradição indestrutível do Beskar.</p>
-                    <button class="btn-faccao btn-mando" onclick="votarFaccao('mando')">Votar nos Mandalorianos</button>
-                    <div class="votos-resultado" id="votos-mando">Votos: --</div>
+                    <p>Guerreiros de elite focados na honra coletiva, no clã e na tradição sagrada e indestrutível do metal Beskar.</p>
+                    <button class="btn-faccao btn-mando" onclick="votarFaccao('mando')">Seguir o Caminho</button>
+                    <div class="votos-resultado" id="votos-mando">Registros: --</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="mandalorian-artigos" class="container" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 80px;">
-        <h2>Crônicas de Mando e Grogu</h2>
-        <p class="subtitulo">Clique diretamente em qualquer card para abrir e ler o registro histórico expandido.</p>
+    <section id="mandalorian-artigos" class="container">
+        <div class="secao-cabecalho">
+            <h2>Arquivos Históricos Expandidos</h2>
+            <p class="subtitulo">Toque ou clique em um bloco de dados para projetar o holograma textual em tela cheia.</p>
+        </div>
         
         <div class="grid-facoes">
             <div class="card card-clicavel" onclick="abrirArtigo('djarin')">
-                <img src="./image_82e381.png" alt="Din Djarin">
+                <div class="imagem-container">
+                    <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80" alt="Din Djarin Registro">
+                </div>
                 <div class="card-info">
+                    <span class="artigo-indice">REGISTRO 01</span>
                     <h3>1. Quem é o Mandaloriano?</h3>
-                    <p>A trajetória do caçador órfão Din Djarin e a quebra de regras para seguir seu coração.</p>
-                    <span class="link-indicador">Clique para ler tudo →</span>
+                    <p>A trajetória de Din Djarin, o enjeitado que desafiou o código de sua guilda por um bem maior.</p>
+                    <span class="link-indicador">Acessar Transmissão →</span>
                 </div>
             </div>
 
             <div class="card card-clicavel" onclick="abrirArtigo('grogu')">
-                <img src="./image_82e2e9.png" alt="Grogu">
+                <div class="imagem-container">
+                    <img src="https://images.unsplash.com/photo-1608889174633-41a1c228e3e5?auto=format&fit=crop&w=600&q=80" alt="Grogu Conexão">
+                </div>
                 <div class="card-info">
+                    <span class="artigo-indice">REGISTRO 02</span>
                     <h3>2. O Fenômeno Grogu</h3>
-                    <p>De uma recompensa valiosa perseguida por remanescentes imperiais a um aprendiz do Caminho.</p>
-                    <span class="link-indicador">Clique para ler tudo →</span>
+                    <p>A criança sensível à Força criada no Templo Jedi que escolheu o caminho do clã mandaloriano.</p>
+                    <span class="link-indicador">Acessar Transmissão →</span>
                 </div>
             </div>
 
             <div class="card card-clicavel" onclick="abrirArtigo('beskar')">
-                <img src="./image_82dfdb.png" alt="Beskar Armor">
+                <div class="imagem-container">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" alt="Liga de Metal Beskar">
+                </div>
                 <div class="card-info">
-                    <h3>3. A Armadura de Beskar</h3>
-                    <p>O metal sagrado que define a cultura e confere resistência total contra sabres de luz.</p>
-                    <span class="link-indicador">Clique para ler tudo →</span>
+                    <span class="artigo-indice">REGISTRO 03</span>
+                    <h3>4. A Armadura de Beskar</h3>
+                    <p>O minério lendário capaz de repelir blasters e resistir ao impacto direto de sabres de luz.</p>
+                    <span class="link-indicador">Acessar Transmissão →</span>
                 </div>
             </div>
 
             <div class="card card-clicavel" onclick="abrirArtigo('aliados')">
-                <img src="./image_82e3bf.png" alt="Aliados e Inimigos">
+                <div class="imagem-container">
+                    <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=600&q=80" alt="Confronto Galáctico">
+                </div>
                 <div class="card-info">
-                    <h3>4. Aliados e Inimigos de Peso</h3>
-                    <p>Os confrontos políticos e táticos contra Moff Gideon e a união com Bo-Katan Kryze.</p>
-                    <span class="link-indicador">Clique para ler tudo →</span>
+                    <span class="artigo-indice">REGISTRO 04</span>
+                    <h3>5. Aliados e Inimigos de Peso</h3>
+                    <p>A aliança geopolítica com Bo-Katan e o perigo iminente representado pelas forças de Moff Gideon.</p>
+                    <span class="link-indicador">Acessar Transmissão →</span>
                 </div>
             </div>
         </div>
     </section>
+
+    <section id="desafio" class="secao-desafio">
+        <div class="caixa-desafio">
+            <div class="scanner-linha"></div>
+            <h2>🔒 Terminal Holocron de Segurança</h2>
+            <p>Insira a palavra-chave correspondente para descriptografar os simuladores de combate e tática.</p>
+            <p id="texto-pergunta-aleatoria" class="enigma">Decodificando dados da rede...</p>
+            
+            <div class="input-grupo">
+                <input type="text" id="resposta-input" placeholder="Digite a resposta do enigma...">
+                <button onclick="verificarDesafio()">Injetar Código</button>
+            </div>
+            <p id="mensagem-erro" class="erro"></p>
+        </div>
+    </section>
+
+    <section id="sala-secreta" class="sala-secreta no-display">
+        <div class="container">
+            <h2>🕹️ Sistemas Táticos Desbloqueados</h2>
+            <p class="subtitulo">Duplo simulador de treinamento operacional carregado na memória do terminal.</p>
+            
+            <div class="botoes-hub">
+                <button class="btn-hub" onclick="alternarSubJogo('flappy')">Módulo Executável: Desvio de Asteroide</button>
+                <button class="btn-hub" onclick="alternarSubJogo('quiz')">Módulo Executável: Teste Imperial (10 Questões)</button>
+            </div>
+            <div id="sub-jogo-flappy" class="no-display sub-bloco-jogo">
+                <div class="janela-jogo">
+                    <canvas id="canvasJogo" width="800" height="400"></canvas>
+                    <div id="tela-gameover" class="gameover-overlay no-display">
+                        <h3>Simulação Encerrada</h3>
+                        <p>Nave destruída por destroços. Desempenho: <span id="pontos-finais">0</span> parsecs</p>
+                        <button class="btn-principal" onclick="reiniciarJogoFlappy()">Reiniciar Motores</button>
+                    </div>
+                </div>
+                <div class="placar">Métrica de Voo: <span id="score">0</span> parsecs</div>
+            </div>
+
+            <div id="sub-jogo-quiz" class="no-display sub-bloco-jogo">
+                <div class="caixa-quiz-interna">
+                    <h3>Avaliação de Nível Galáctico</h3>
+                    <div id="bloco-pergunta-quiz">
+                        <p id="quiz-pergunta-texto" class="quiz-pergunta">Carregando...</p>
+                        <div id="quiz-opcoes-container" class="quiz-container-opcoes"></div>
+                    </div>
+                    <div id="bloco-resultado-quiz" class="no-display">
+                        <h4>Módulo Concluído com Sucesso</h4>
+                        <p id="quiz-resultado-texto">Resultado final computado.</p>
+                        <button class="btn-principal" style="margin-top:20px;" onclick="iniciarNovoQuiz10()">Reinicializar Teste</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="modal-artigo" class="modal">
+        <div class="modal-conteudo">
+            <span class="fechar" onclick="fecharArtigoModal()">&times;</span>
+            <h2 id="modal-titulo">Título</h2>
+            <div id="modal-texto">Conteúdo</div>
+        </div>
+    </div>
+
+    <div id="tela-animacao" class="overlay-animacao" onclick="fecharAnimacao()">
+        <div class="conteudo-animacao">
+            <div id="icone-animacao"></div>
+            <h2 id="texto-animacao"></h2>
+            <p style="color: #ff3e3e; font-size: 13px; margin-top: 20px; letter-spacing: 2px;">TOQUE PARA DESCONECTAR O HOLOGRAMA</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Banco de Dados da Aliança Galáctica. Codificado sob padrões estritos de design espacial.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
