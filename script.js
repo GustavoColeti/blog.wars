@@ -9,7 +9,6 @@ const listaEnigmas = [
 
 let enigmaSelecionado = null;
 
-// Escolhe uma pergunta aleatória do Holocron ao iniciar a página
 function carregarEnigmaAleatorio() {
     const indice = Math.floor(Math.random() * listaEnigmas.length);
     enigmaSelecionado = listaEnigmas[indice];
@@ -17,26 +16,24 @@ function carregarEnigmaAleatorio() {
 }
 carregarEnigmaAleatorio();
 
-// === SISTEMA DE VALIDAÇÃO DO DESAFIO ===
 function verificarDesafio() {
     const respostaUser = document.getElementById('resposta-input').value.trim().toLowerCase();
     const erroEl = document.getElementById('mensagem-erro');
     const salaSecretaHub = document.getElementById('sala-secreta');
 
     if (respostaUser.includes(enigmaSelecionado.a)) {
-        erroEl.style.color = "#4ade80";
-        erroEl.innerText = "✓ Código aceito! Painel central liberado abaixo.";
+        erroEl.style.color = "#00f2ff";
+        erroEl.innerText = "✓ Assinatura aceita. Arquivos liberados abaixo.";
         salaSecretaHub.classList.remove('no-display');
         setTimeout(() => {
             salaSecretaHub.scrollIntoView({ behavior: 'smooth' });
         }, 400);
     } else {
-        erroEl.style.color = "#f87171";
-        erroEl.innerText = "Acesso Negado! Resposta incorreta para este registro de dados.";
+        erroEl.style.color = "#ff0055";
+        erroEl.innerText = "Falha crítica. Resposta incorreta nos registros públicos.";
     }
 }
 
-// === ALTERNADOR DE SUB-JOGOS NO HUB ===
 function alternarSubJogo(tipo) {
     document.getElementById('sub-jogo-flappy').classList.add('no-display');
     document.getElementById('sub-jogo-quiz').classList.add('no-display');
@@ -57,7 +54,6 @@ function inicializarJogoFlappy() {
     canvas = document.getElementById('canvasJogo');
     ctx = canvas.getContext('2d');
     
-    // Remove listeners antigos para evitar travamento acumulado
     window.removeEventListener('keydown', empuxoNave);
     canvas.removeEventListener('click', empuxoNave);
 
@@ -69,14 +65,14 @@ function inicializarJogoFlappy() {
 
 function empuxoNave(e) {
     if ((e.code === 'Space' || e.type === 'click') && jogandoFlappy) {
-        nave.velocidade = -5.8;
+        nave.velocidade = -5.5;
         if(e.code === 'Space') e.preventDefault();
     }
 }
 
 function reiniciarJogoFlappy() {
     document.getElementById('tela-gameover').classList.add('no-display');
-    nave = { x: 120, y: 170, largura: 32, altura: 22, gravidade: 0.32, velocidade: 0 };
+    nave = { x: 120, y: 170, largura: 30, altura: 20, gravidade: 0.3, velocidad: 0 };
     obstaculos = [];
     frame = 0;
     scoreFlappy = 0;
@@ -90,58 +86,49 @@ function reiniciarJogoFlappy() {
 function loopFlappy() {
     if (!jogandoFlappy) return;
     
-    // Limpar tela
-    ctx.fillStyle = '#06060f';
+    ctx.fillStyle = '#030305';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    // Desenhar estrelas fixas de fundo
-    ctx.fillStyle = '#ffffff';
-    for (let i = 0; i < 15; i++) {
-        ctx.fillRect((i * 65) % canvas.width, (i * 37) % canvas.height, 2, 2);
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    for (let i = 0; i < 20; i++) {
+        ctx.fillRect((i * 45) % canvas.width, (i * 29) % canvas.height, 1.5, 1.5);
     }
 
-    // Física da nave
     nave.velocidade += nave.gravidade;
     nave.y += nave.velocidade;
 
     if (nave.y + nave.altura > canvas.height || nave.y < 0) derrubarNave();
 
-    // Renderizar nave (formato triangular de caça estelar)
-    ctx.fillStyle = '#94a3b8';
+    ctx.fillStyle = '#00f2ff';
     ctx.beginPath();
     ctx.moveTo(nave.x + nave.largura, nave.y + nave.altura / 2);
     ctx.lineTo(nave.x, nave.y);
-    ctx.lineTo(nave.x + 6, nave.y + nave.altura / 2);
+    ctx.lineTo(nave.x + 5, nave.y + nave.altura / 2);
     ctx.lineTo(nave.x, nave.y + nave.altura);
     ctx.closePath();
     ctx.fill();
 
-    // Geração de barreiras
-    if (frame % 100 === 0) {
-        let gap = 130;
-        let altMin = 30;
+    if (frame % 90 === 0) {
+        let gap = 125;
+        let altMin = 40;
         let altMax = canvas.height - gap - altMin;
         let topoAlt = Math.floor(Math.random() * (altMax - altMin + 1)) + altMin;
-        obstaculos.push({ x: canvas.width, topo: topoAlt, base: canvas.height - (topoAlt + gap), largura: 25, passou: false });
+        obstaculos.push({ x: canvas.width, topo: topoAlt, base: canvas.height - (topoAlt + gap), largura: 30, passou: false });
     }
 
-    // Movimentação e colisão das barreiras
     for (let i = obstaculos.length - 1; i >= 0; i--) {
         let obs = obstaculos[i];
-        obs.x -= 3.2;
+        obs.x -= 3.5;
 
-        // Desenhar barreiras (Estilo feixes lasers de perigo)
-        ctx.fillStyle = '#ef4444';
+        ctx.fillStyle = '#ff0055';
         ctx.fillRect(obs.x, 0, obs.largura, obs.topo);
         ctx.fillRect(obs.x, canvas.height - obs.base, obs.largura, obs.base);
 
-        // Checar colisões
         if (nave.x < obs.x + obs.largura && nave.x + nave.largura > obs.x && 
            (nave.y < obs.topo || nave.y + nave.altura > canvas.height - obs.base)) {
             derrubarNave();
         }
 
-        // Computar ponto
         if (!obs.passou && obs.x + obs.largura < nave.x) {
             obs.passou = true;
             scoreFlappy++;
@@ -161,8 +148,7 @@ function derrubarNave() {
     document.getElementById('tela-gameover').classList.remove('no-display');
 }
 
-
-// === JOGO 2: ENGINE DO QUIZ COMPLETO DE 10 PERGUNTAS ===
+// === JOGO 2: QUIZ SAGA COMPLETE ===
 const bancoQuestoesQuiz = [
     { p: "1. Quem construiu C-3PO?", o: ["Luke Skywalker", "Anakin Skywalker", "Obi-Wan Kenobi", "Lando Calrissian"], c: 1 },
     { p: "2. Qual a cor do sabre de luz de Mace Windu?", o: ["Azul", "Verde", "Roxo", "Amarelo"], c: 2 },
@@ -207,9 +193,7 @@ function processarRespostaQuiz(opcaoSelecionada) {
     if (opcaoSelecionada === bancoQuestoesQuiz[indiceQuestaoAtual].c) {
         acertosQuiz++;
     }
-
     indiceQuestaoAtual++;
-
     if (indiceQuestaoAtual < bancoQuestoesQuiz.length) {
         renderizarQuestaoQuiz();
     } else {
@@ -220,18 +204,17 @@ function processarRespostaQuiz(opcaoSelecionada) {
 function exibirResultadoQuiz() {
     document.getElementById('bloco-pergunta-quiz').classList.add('no-display');
     document.getElementById('bloco-resultado-quiz').classList.remove('no-display');
-    document.getElementById('quiz-resultado-texto').innerText = `Varredura de dados concluída. Você acertou ${acertosQuiz} de 10 perguntas!`;
+    document.getElementById('quiz-resultado-texto').innerText = `Varredura de dados concluída. Desempenho operacional estável: ${acertosQuiz} acertos de 10 possíveis.`;
 }
 
-
-// === SISTEMA DE VOTAÇÃO COERCITIVO (MUDANÇA BLOQUEADA) ===
-let bancoVotosficticio = { jedi: 2405, vader: 1894, mando: 3211 };
+// === SISTEMA DE LEALDADE DE VOTOS ===
+let bancoVotosficticio = { jedi: 4092, vader: 5821, mando: 6104 };
 let votoUsuarioEfetivado = null;
 
 function atualizarPlacarVisualVotos() {
-    document.getElementById('votos-jedi').innerText = `Votos: ${bancoVotosficticio.jedi} pessoas`;
-    document.getElementById('votos-vader').innerText = `Votos: ${bancoVotosficticio.vader} pessoas`;
-    document.getElementById('votos-mando').innerText = `Votos: ${bancoVotosficticio.mando} pessoas`;
+    document.getElementById('votos-jedi').innerText = `Registros: ${bancoVotosficticio.jedi} assinaturas`;
+    document.getElementById('votos-vader').innerText = `Registros: ${bancoVotosficticio.vader} assinaturas`;
+    document.getElementById('votos-mando').innerText = `Registros: ${bancoVotosficticio.mando} assinaturas`;
 }
 atualizarPlacarVisualVotos();
 
@@ -240,14 +223,14 @@ function votarFaccao(escolha) {
     boxAlerta.className = "alerta-sistema";
 
     if (votoUsuarioEfetivado !== null && votoUsuarioEfetivado !== escolha) {
-        boxAlerta.innerText = "🚨 ALERTA DE TRAIÇÃO! Tentando mudar de lado na guerra civil galáctica? Seu voto original está trancado!";
+        boxAlerta.innerText = "🚨 DETECTADO DESVIO DE CONDUTA! Sua lealdade inicial já foi selada na inteligência da Orla Exterior.";
         boxAlerta.classList.add('alerta-traira');
         boxAlerta.style.display = 'block';
         return;
     }
 
     if (votoUsuarioEfetivado === escolha) {
-        boxAlerta.innerText = "Sua lealdade já está registrada e protegida neste lado!";
+        boxAlerta.innerText = "Sua assinatura biométrica já valida esta facção.";
         boxAlerta.classList.add('alerta-sucesso');
         boxAlerta.style.display = 'block';
         return;
@@ -257,7 +240,7 @@ function votarFaccao(escolha) {
     bancoVotosficticio[escolha] += 1;
     atualizarPlacarVisualVotos();
 
-    boxAlerta.innerText = "✓ Escolha processada com sucesso! Seus dados foram salvos na base planetária.";
+    boxAlerta.innerText = "✓ Transmissão de juramento criptografada e enviada para a central galáctica.";
     boxAlerta.classList.add('alerta-sucesso');
     boxAlerta.style.display = 'block';
 
@@ -269,19 +252,18 @@ function acionarHolograma(lado) {
     const txt = document.getElementById('texto-animacao');
 
     if (lado === 'jedi') {
-        txt.innerText = "Yoda diz: 'Que a Força esteja com você. Treinado você será!'";
+        txt.innerText = "\"Que a Força esteja com você. O conhecimento deve ser compartilhado, nunca guardado.\" — Mestre Yoda";
     } else if (lado === 'vader') {
-        txt.innerText = "Darth Vader diz: 'Você não conhece o poder do Lado Sombrio. Junte-se a mim!'";
+        txt.innerText = "\"Você não conhece o real poder do Lado Sombrio. Junte-se a nós ou enfrente a destruição.\" — Darth Vader";
     } else if (lado === 'mando') {
-        txt.innerText = "Mandaloriano diz: 'This is the Way. Este é o único Caminho.'";
+        txt.innerText = "\"Armaduras protegem o corpo, mas a honra protege o clã. Este é o Caminho.\" — Din Djarin";
     }
     overlay.style.display = 'flex';
 }
 
 function fecharAnimacao() { document.getElementById('tela-animacao').style.display = 'none'; }
 
-
-// === MODAL DE TEXTOS INTEGRADOS COMPLETO ===
+// === MODAL INJETOR DE TEXTOS COMPLETO ===
 const dbArtigosTextos = {
     djarin: {
         t: "1. Quem é o Mandaloriano? A Trajetória de Din Djarin",
@@ -293,7 +275,7 @@ const dbArtigosTextos = {
     },
     beskar: {
         t: "3. A Armadura de Beskar: O Design Visual da Série",
-        p: "<p>Um dos elementos visuais mais marcantes e simbólicos de The Mandalorian é a armadura do protagonista, feita de Beskar. O Beskar é um metal extremamente raro e valioso, nativo do planeta Mandalore, conhecido por sua resistência lendária. Ele é capaz de suportar disparos de blasters e até mesmo resistir a golpes diretos de sabres de luz, o que torna os guerreiros mandalorianos oponentes temíveis.</p><p>No início da série, Din Djarin veste uma armadura remendada com peças de outros metals. Conforme ele cumpre missões perigosas, ele recebe placas de Beskar puro como pagamento, que são fundidas pela Armadora para criar seu traje prateado e reluzente. Além da proteção física, a evolução da armadura funciona como um indicador visual do status e das conquistas do personagem dentro da narrativa.</p>"
+        p: "<p>Um dos elementos visuais mais marcantes e simbólicos de The Mandalorian é a armadura do protagonista, feita de Beskar. O Beskar é um metal extremamente raro e valioso, nativo do planeta Mandalore, conhecido por sua resistência lendária. Ele é capaz de suportar disparos de blasters e até mesmo resistir a golpes diretos de sabres de luz, o que torna os guerreiros mandalorianos oponentes temíveis.</p><p>No início da série, Din Djarin veste uma armadura remendada com peças de outros metais. Conforme ele cumpre missões perigosas, ele recebe placas de Beskar puro como pagamento, que são fundidas pela Armadora para criar seu traje prateado e reluzente. Além da proteção física, a evolução da armadura funciona como um indicador visual do status e das conquistas do personagem dentro da narrativa.</p>"
     },
     aliados: {
         t: "4. Aliados e Inimigos de Peso na Galáxia",
