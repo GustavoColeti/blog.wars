@@ -1,32 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@300;400;600&display=swap');
+
+:root {
+    --bg-prime: #050508;
+    --bg-card: rgba(10, 11, 18, 0.6);
+    --borda-glow: rgba(255, 255, 255, 0.08);
+    --accent-jedi: #00f2ff;
+    --accent-sith: #ff0055;
+    --accent-mando: #ffaa00;
+}
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 body {
-    background-color: #030306;
-    background-image: 
-        radial-gradient(white, rgba(255,255,255,.2) 1.5px, transparent 35px),
-        radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 25px);
-    background-size: 400px 400px, 250px 250px;
-    background-position: 0 0, 50px 50px;
-    color: #f5f5f9;
-    scroll-behavior: smooth;
+    background-color: var(--bg-prime);
+    color: #f0f2f5;
     overflow-x: hidden;
+    scroll-behavior: smooth;
+    background-image: 
+        radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+        radial-gradient(1px 1px at 75px 120px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1.5px 1.5px at 140px 70px, #fff, transparent);
+    background-size: 200px 200px;
+}
+
+.sabre-linha {
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-jedi), var(--accent-sith), var(--accent-mando));
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.8);
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 8%;
-    background: rgba(2, 2, 5, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 2px solid #ffe81f;
+    padding: 25px 8%;
+    background: rgba(5, 5, 8, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -34,176 +49,155 @@ header {
 
 .logo {
     font-family: 'Orbitron', sans-serif;
-    font-size: 26px;
-    font-weight: 700;
-    color: #ffe81f;
-    letter-spacing: 4px;
-    text-shadow: 0 0 8px rgba(255, 232, 31, 0.5);
+    font-weight: 900;
+    font-size: 24px;
+    letter-spacing: 6px;
+    color: #fff;
 }
+.logo span { color: var(--accent-sith); text-shadow: 0 0 10px rgba(255, 0, 85, 0.6); }
 
-nav ul {
-    display: flex;
-    list-style: none;
-}
-
-nav ul li { margin-left: 30px; }
-
+nav ul { display: flex; list-style: none; gap: 35px; }
 nav ul li a {
-    color: #e2e2ec;
+    color: #94a3b8;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     transition: color 0.3s;
 }
+nav ul li a:hover { color: #fff; }
 
-nav ul li a:hover { color: #ffe81f; }
-
+/* Hero Banner Cinema */
 .hero {
-    background: linear-gradient(to bottom, rgba(3,3,6,0.2), #030306), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200') no-repeat center center/cover;
-    height: 60vh;
+    position: relative;
+    height: 75vh;
     display: flex;
-    justify-content: center;
     align-items: center;
-    text-align: center;
+    padding: 0 8%;
+    background: linear-gradient(180deg, rgba(5,5,8,0) 0%, var(--bg-prime) 100%), 
+                url('https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1600&q=80') center center/cover;
 }
 
-.hero-conteudo h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 50px;
-    color: #fff;
-    margin-bottom: 15px;
-    text-shadow: 0 0 15px rgba(255,255,255,0.2);
-}
+.hero-conteudo { max-width: 650px; z-index: 2; }
+.tag-galatica { color: var(--accent-jedi); font-weight: 700; font-size: 12px; letter-spacing: 4px; display: block; margin-bottom: 15px; }
+.hero-conteudo h1 { font-family: 'Orbitron', sans-serif; font-size: 56px; font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
+.hero-conteudo p { color: #94a3b8; font-size: 17px; line-height: 1.6; margin-bottom: 30px; }
 
 .btn-principal {
     display: inline-block;
-    background: #ffe81f;
+    background: #fff;
     color: #000;
     text-decoration: none;
-    padding: 12px 35px;
+    padding: 14px 40px;
     font-weight: 600;
-    border-radius: 30px;
-    box-shadow: 0 4px 15px rgba(255, 232, 31, 0.3);
-    transition: transform 0.2s, background 0.2s;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 20px rgba(255,255,255,0.15);
+    transition: all 0.3s ease;
     border: none;
     cursor: pointer;
 }
+.btn-principal:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(255,255,255,0.3); }
 
-.btn-principal:hover {
-    transform: translateY(-2px);
-    background: #fff;
-}
+/* Grid de Cards Premium */
+.container { padding: 80px 8%; max-width: 1400px; margin: 0 auto; }
+.secao-cabecalho { text-align: center; margin-bottom: 50px; }
+.secao-cabecalho h2 { font-family: 'Orbitron', sans-serif; font-size: 36px; letter-spacing: 2px; margin-bottom: 12px; }
+.subtitulo { color: #64748b; font-size: 15px; }
 
-.container { padding: 60px 8%; max-width: 1300px; margin: 0 auto; }
-
-.container h2 {
-    font-family: 'Orbitron', sans-serif;
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 10px;
-}
-
-.subtitulo { text-align: center; color: #a1a1aa; margin-bottom: 40px; font-size: 15px; }
-
-.grid-facoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+.grid-facoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
 
 .card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--borda-glow);
+    border-radius: 8px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s, border-color 0.3s;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
 }
 
-.card img { width: 100%; height: 180px; object-fit: cover; }
+.imagem-container { position: relative; width: 100%; height: 220px; overflow: hidden; }
+.imagem-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.card:hover .imagem-container img { transform: scale(1.05); }
 
-.card-info { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+.sabre-brilho { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; }
+.jedi-neon { background: var(--accent-jedi); box-shadow: 0 0 10px var(--accent-jedi); }
+.sith-neon { background: var(--accent-sith); box-shadow: 0 0 10px var(--accent-sith); }
+.mando-neon { background: var(--accent-mando); box-shadow: 0 0 10px var(--accent-mando); }
 
-.card-info h3 { margin-bottom: 10px; font-size: 19px; color: #fff; }
+.card-info { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+.card-info h3 { font-family: 'Orbitron', sans-serif; font-size: 20px; margin-bottom: 12px; }
+.card-info p { color: #94a3b8; font-size: 14px; line-height: 1.6; margin-bottom: 25px; }
 
-.card-info p { font-size: 13.5px; color: #cbd5e1; line-height: 1.6; margin-bottom: 15px; }
+/* Botões Neon Estilizados */
+.btn-faccao { width: 100%; padding: 12px; border: none; font-weight: 600; cursor: pointer; border-radius: 4px; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; transition: all 0.3s; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: #fff; }
+.btn-jedi:hover { border-color: var(--accent-jedi); background: rgba(0, 242, 255, 0.1); color: var(--accent-jedi); box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); }
+.btn-imperio:hover { border-color: var(--accent-sith); background: rgba(255, 0, 85, 0.1); color: var(--accent-sith); box-shadow: 0 0 15px rgba(255, 0, 85, 0.2); }
+.btn-mando:hover { border-color: var(--accent-mando); background: rgba(255, 170, 0, 0.1); color: var(--accent-mando); box-shadow: 0 0 15px rgba(255, 170, 0, 0.2); }
 
+.votos-resultado { margin-top: 15px; font-size: 12px; text-align: center; color: #64748b; font-family: 'Orbitron', sans-serif; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px; }
+
+/* Cards Clicáveis (Artigos) */
 .card-clicavel { cursor: pointer; }
+.card-clicavel:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+.artigo-indice { font-size: 11px; color: var(--accent-mando); font-weight: 700; letter-spacing: 2px; margin-bottom: 5px; display: block; }
+.link-indicador { color: #fff; font-size: 12px; font-weight: 600; margin-top: auto; display: flex; align-items: center; gap: 5px; transition: gap 0.2s; }
+.card-clicavel:hover .link-indicador { gap: 10px; color: var(--accent-jedi); }
 
-.card-clicavel:hover {
-    transform: translateY(-5px);
-    border-color: rgba(255, 232, 31, 0.4);
-}
+/* Sistema Alertas */
+.alerta-sistema { max-width: 700px; margin: 0 auto 35px; padding: 15px; border-radius: 4px; text-align: center; font-size: 14px; font-weight: 600; display: none; }
+.alerta-traira { background: rgba(255, 0, 85, 0.1); color: #ff4d7d; border: 1px solid var(--accent-sith); }
+.alerta-sucesso { background: rgba(0, 242, 255, 0.1); color: #70f3ff; border: 1px solid var(--accent-jedi); }
 
-.link-indicador { color: #ffe81f; font-size: 13px; font-weight: 600; margin-top: auto; }
+/* Terminal Enigma */
+.secao-desafio { padding: 100px 20px; background: #020204; position: relative; }
+.caixa-desafio { background: #090a0f; border: 1px solid rgba(255,255,255,0.05); max-width: 600px; margin: 0 auto; padding: 45px; border-radius: 8px; text-align: center; position: relative; overflow: hidden; }
+.scanner-linha { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--accent-jedi); opacity: 0.4; animation: scanear 3s linear infinite; }
+@keyframes scanear { 0% { top: 0; } 50% { top: 100%; } 100% { top: 0; } }
 
-/* Botões das Facções */
-.btn-faccao { width: 100%; padding: 10px; border: none; font-weight: 600; cursor: pointer; border-radius: 6px; }
+.enigma { color: var(--accent-mando); font-family: 'Orbitron', sans-serif; margin: 20px 0; font-size: 14px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 4px; border-left: 3px solid var(--accent-mando); }
+.input-grupo { display: flex; gap: 10px; margin-top: 25px; }
+.input-grupo input { flex: 1; padding: 14px; background: #000; border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 4px; outline: none; font-size: 14px; }
+.input-grupo input:focus { border-color: var(--accent-jedi); }
+.input-grupo button { background: #fff; color: #000; border: none; padding: 0 25px; font-weight: 600; border-radius: 4px; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
 
-.btn-jedi { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid #38bdf8; }
-.btn-jedi:hover { background: #38bdf8; color: #000; box-shadow: 0 0 15px #38bdf8; }
+.erro { margin-top: 15px; font-size: 13px; font-weight: 600; }
 
-.btn-imperio { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444; }
-.btn-imperio:hover { background: #ef4444; color: #fff; box-shadow: 0 0 15px #ef4444; }
+/* Area Secreta */
+.sala-secreta { padding: 80px 0; background: #010102; border-top: 1px solid rgba(255,255,255,0.1); }
+.botoes-hub { display: flex; justify-content: center; gap: 20px; margin-bottom: 50px; flex-wrap: wrap; }
+.btn-hub { background: #0d0e15; color: #fff; border: 1px solid rgba(255,255,255,0.08); padding: 14px 25px; font-weight: 600; border-radius: 4px; cursor: pointer; transition: all 0.3s; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+.btn-hub:hover { border-color: var(--accent-jedi); background: #131520; box-shadow: 0 0 15px rgba(0,242,255,0.1); }
 
-.btn-mando { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid #94a3b8; }
-.btn-mando:hover { background: #94a3b8; color: #000; box-shadow: 0 0 15px #94a3b8; }
+.sub-bloco-jogo { animation: surgimento 0.4s ease; }
+@keyframes surgimento { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-.votos-resultado {
-    margin-top: 10px; font-size: 13px; text-align: center; color: #ffe81f;
-    background: rgba(0,0,0,0.3); padding: 5px; border-radius: 4px;
-}
+.janela-jogo { position: relative; width: 100%; max-width: 800px; height: 400px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden; background: #030305; }
+.gameover-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(3,3,5,0.93); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5; }
+.gameover-overlay h3 { color: var(--accent-sith); font-family: 'Orbitron', sans-serif; font-size: 32px; margin-bottom: 10px; }
+.placar { font-family: 'Orbitron', sans-serif; font-size: 16px; color: var(--accent-jedi); margin-top: 20px; text-align: center; }
 
-/* Sistema de Alerta Traíra */
-.alerta-sistema { max-width: 600px; margin: 0 auto 25px; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600; display: none; }
-.alerta-traira { background: rgba(220, 38, 38, 0.2); color: #f87171; border: 2px solid #ef4444; animation: pulsar 0.4s infinite alternate; }
-.alerta-sucesso { background: rgba(22, 163, 74, 0.2); color: #4ade80; border: 2px solid #22c55e; }
-
-@keyframes pulsar { from { box-shadow: 0 0 4px #ef4444; } to { box-shadow: 0 0 16px #ef4444; } }
-
-/* Desafio Holocron */
-.secao-desafio { padding: 60px 20px; background: #010103; }
-.caixa-desafio { background: rgba(255,255,255,0.01); border: 2px dashed rgba(255,232,31,0.3); max-width: 550px; margin: 0 auto; padding: 35px; border-radius: 12px; text-align: center; }
-.enigma { font-style: italic; color: #ffe81f; margin: 15px 0; font-size: 15px; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px; }
-
-.input-grupo { display: flex; gap: 10px; margin-top: 20px; }
-.input-grupo input { flex: 1; padding: 12px; background: #000; border: 1px solid #333; color: #fff; border-radius: 6px; outline: none; }
-.input-grupo input:focus { border-color: #ffe81f; }
-.input-grupo button { background: #ffe81f; color: #000; border: none; padding: 0 20px; font-weight: 600; border-radius: 6px; cursor: pointer; }
-
-.erro { margin-top: 10px; font-size: 13.5px; font-weight: bold; }
-
-/* Hub Secreto & Sub-jogos */
-.sala-secreta { padding: 60px 20px; background: #000; text-align: center; border-top: 2px solid #ffe81f; }
-.botoes-hub { display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; flex-wrap: wrap; }
-.btn-hub { background: #1e1e2f; color: #fff; border: 1px solid #444; padding: 12px 20px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
-.btn-hub:hover { border-color: #ffe81f; background: #2a2a3f; box-shadow: 0 0 10px rgba(255,232,31,0.2); }
-
-.sub-bloco-jogo { animation: fadin 0.3s ease-in-out; margin-top: 20px; }
-@keyframes fadin { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-.janela-jogo { position: relative; width: 100%; max-width: 800px; height: 400px; margin: 0 auto; border: 2px solid #ffe81f; border-radius: 8px; overflow: hidden; background: #05050a; }
-.gameover-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5; }
-.gameover-overlay h3 { color: #ef4444; font-size: 28px; margin-bottom: 10px; font-family: 'Orbitron', sans-serif; }
-.gameover-overlay p { margin-bottom: 20px; font-size: 16px; }
-.placar { font-size: 18px; font-weight: 600; color: #ffe81f; margin-top: 15px; }
-
-/* Quiz Exame CSS */
-.caixa-quiz-interna { background: #0d0d15; border: 1px solid #333; max-width: 600px; margin: 0 auto; padding: 30px; border-radius: 10px; text-align: left; }
-.caixa-quiz-interna h3 { text-align: center; color: #fff; margin-bottom: 20px; font-family: 'Orbitron', sans-serif; }
-.quiz-pergunta { font-size: 16px; font-weight: 600; margin-bottom: 20px; color: #ffe81f; line-height: 1.5; }
+/* Quiz Interno */
+.caixa-quiz-interna { background: #090a0f; border: 1px solid rgba(255,255,255,0.05); max-width: 650px; margin: 0 auto; padding: 40px; border-radius: 8px; }
+.quiz-pergunta { font-size: 18px; font-weight: 600; margin-bottom: 25px; color: #fff; line-height: 1.5; }
 .quiz-container-opcoes { display: flex; flex-direction: column; gap: 12px; }
-.btn-opcao-quiz { background: #151522; color: #e2e2e9; border: 1px solid #334155; padding: 12px 15px; text-align: left; border-radius: 6px; cursor: pointer; font-size: 14px; transition: background 0.2s; }
-.btn-opcao-quiz:hover { background: #222235; border-color: #ffe81f; }
+.btn-opcao-quiz { background: #11121a; color: #94a3b8; border: 1px solid rgba(255,255,255,0.05); padding: 14px 20px; text-align: left; border-radius: 4px; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+.btn-opcao-quiz:hover { background: #161824; border-color: #fff; color: #fff; }
 
-/* Modais e Overlays */
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(6px); z-index: 200; justify-content: center; align-items: center; padding: 20px; }
-.modal-conteudo { background: #0b0b10; border: 2px solid #ffe81f; border-radius: 12px; padding: 30px; max-width: 600px; width: 100%; position: relative; }
-.modal-conteudo h2 { font-family: 'Orbitron', sans-serif; color: #ffe81f; margin-bottom: 15px; font-size: 22px; }
-.modal-conteudo p { font-size: 14px; color: #cbd5e1; line-height: 1.7; margin-bottom: 12px; }
-.fechar { position: absolute; top: 15px; right: 20px; color: #aaa; font-size: 28px; cursor: pointer; }
-.fechar:hover { color: #ffe81f; }
+/* Modais */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 200; justify-content: center; align-items: center; padding: 20px; }
+.modal-conteudo { background: #090a0f; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 40px; max-width: 650px; width: 100%; position: relative; }
+.modal-conteudo h2 { font-family: 'Orbitron', sans-serif; color: #fff; margin-bottom: 20px; font-size: 24px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; }
+.modal-conteudo p { font-size: 15px; color: #94a3b8; line-height: 1.7; margin-bottom: 15px; }
+.fechar { position: absolute; top: 20px; right: 25px; color: #64748b; font-size: 32px; cursor: pointer; }
+.fechar:hover { color: #fff; }
 
-.overlay-animacao { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 300; justify-content: center; align-items: center; text-align: center; }
-.conteudo-animacao h2 { font-family: 'Orbitron', sans-serif; color: #fff; font-size: 24px; padding: 0 20px; }
+.overlay-animacao { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 300; justify-content: center; align-items: center; }
+.conteudo-animacao h2 { font-family: 'Orbitron', sans-serif; color: #fff; font-size: 26px; padding: 0 30px; line-height: 1.4; text-transform: uppercase; letter-spacing: 1px; }
 
 .no-display { display: none !important; }
-footer { text-align: center; padding: 30px; background: #000; color: #555; font-size: 13px; border-top: 1px solid #111; }
+footer { text-align: center; padding: 40px; background: #020204; color: #475569; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.02); }
