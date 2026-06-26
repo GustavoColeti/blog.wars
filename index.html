@@ -138,5 +138,81 @@
             </div>
         </div>
     </section>
-    </body>
+
+    <section id="desafio" class="secao-desafio">
+        <div class="caixa-desafio">
+            <div class="scanner-linha"></div>
+            <h2>🔒 Terminal Holocron de Segurança</h2>
+            <p>Insira a palavra-chave correspondente para descriptografar os simuladores de combate e tática.</p>
+            <p id="texto-pergunta-aleatoria" class="enigma">Decodificando dados da rede...</p>
+            
+            <div class="input-grupo">
+                <input type="text" id="resposta-input" placeholder="Digite a resposta do enigma...">
+                <button onclick="verificarDesafio()">Injetar Código</button>
+            </div>
+            <p id="mensagem-erro" class="erro"></p>
+        </div>
+    </section>
+
+    <section id="sala-secreta" class="sala-secreta no-display">
+        <div class="container">
+            <h2>🕹️ Sistemas Táticos Desbloqueados</h2>
+            <p class="subtitulo">Duplo simulador de treinamento operacional carregado na memória do terminal.</p>
+            
+            <div class="botoes-hub">
+                <button class="btn-hub" onclick="alternarSubJogo('flappy')">Módulo Executável: Desvio de Asteroide</button>
+                <button class="btn-hub" onclick="alternarSubJogo('quiz')">Módulo Executável: Teste Imperial (10 Questões)</button>
+            </div>
+
+            <div id="sub-jogo-flappy" class="no-display sub-bloco-jogo">
+                <div class="janela-jogo">
+                    <canvas id="canvasJogo" width="800" height="400"></canvas>
+                    <div id="tela-gameover" class="gameover-overlay no-display">
+                        <h3>Simulação Encerrada</h3>
+                        <p>Nave destruída por destroços. Desempenho: <span id="pontos-finais">0</span> parsecs</p>
+                        <button class="btn-principal" onclick="reiniciarJogoFlappy()">Reiniciar Motores</button>
+                    </div>
+                </div>
+                <div class="placar">Métrica de Voo: <span id="score">0</span> parsecs</div>
+            </div>
+
+            <div id="sub-jogo-quiz" class="no-display sub-bloco-jogo">
+                <div class="caixa-quiz-interna">
+                    <h3>Avaliação de Nível Galáctico</h3>
+                    <div id="bloco-pergunta-quiz">
+                        <p id="quiz-pergunta-texto" class="quiz-pergunta">Carregando...</p>
+                        <div id="quiz-opcoes-container" class="quiz-container-opcoes"></div>
+                    </div>
+                    <div id="bloco-resultado-quiz" class="no-display">
+                        <h4>Módulo Concluído com Sucesso</h4>
+                        <p id="quiz-resultado-texto">Resultado final computado.</p>
+                        <button class="btn-principal" style="margin-top:20px;" onclick="iniciarNovoQuiz10()">Reinicializar Teste</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="modal-artigo" class="modal">
+        <div class="modal-conteudo">
+            <span class="fechar" onclick="fecharArtigoModal()">&times;</span>
+            <h2 id="modal-titulo">Título</h2>
+            <div id="modal-texto">Conteúdo</div>
+        </div>
+    </div>
+
+    <div id="tela-animacao" class="overlay-animacao" onclick="fecharAnimacao()">
+        <div class="conteudo-animacao">
+            <div id="icone-animacao"></div>
+            <h2 id="texto-animacao"></h2>
+            <p style="color: #ff3e3e; font-size: 13px; margin-top: 20px; letter-spacing: 2px;">TOQUE PARA DESCONECTAR O HOLOGRAMA</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Banco de Dados da Aliança Galáctica. Codificado sob padrões estritos de design espacial.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
 </html>
