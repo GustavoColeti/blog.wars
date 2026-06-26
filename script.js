@@ -47,16 +47,17 @@ function alternarSubJogo(tipo) {
     }
 }
 
-// === JOGO 1: ENGINE DO FLAPPY SHIP ===
+// === JOGO 1: ENGINE DO FLAPPY SHIP (CORRIGIDO) ===
 let canvas, ctx, nave, obstaculos, frame, scoreFlappy, loopId, jogandoFlappy = false;
 
 function inicializarJogoFlappy() {
     canvas = document.getElementById('canvasJogo');
     ctx = canvas.getContext('2d');
     
+    // Evita duplicar eventos escutando a janela
     window.removeEventListener('keydown', empuxoNave);
     canvas.removeEventListener('click', empuxoNave);
-
+    
     window.addEventListener('keydown', empuxoNave);
     canvas.addEventListener('click', empuxoNave);
     
@@ -64,41 +65,53 @@ function inicializarJogoFlappy() {
 }
 
 function empuxoNave(e) {
-    if ((e.code === 'Space' || e.type === 'click') && jogandoFlappy) {
-        nave.velocidade = -5.5;
+    if (!jogandoFlappy) return;
+    if (e.code === 'Space' || e.type === 'click') {
+        nave.velocidade = -5.5; // Faz a nave subir
         if(e.code === 'Space') e.preventDefault();
     }
 }
 
 function reiniciarJogoFlappy() {
     document.getElementById('tela-gameover').classList.add('no-display');
-    nave = { x: 120, y: 170, largura: 30, altura: 20, gravidade: 0.3, velocidad: 0 };
+    
+    // CORREÇÃO: "velocidade" ajustada corretamente com a letra "e" no final
+    nave = { x: 120, y: 170, largura: 30, altura: 20, gravidade: 0.3, velocidade: 0 };
     obstaculos = [];
     frame = 0;
     scoreFlappy = 0;
+    
     document.getElementById('score').innerText = scoreFlappy;
     jogandoFlappy = true;
-
+    
     if (loopId) cancelAnimationFrame(loopId);
     loopFlappy();
 }
 
 function loopFlappy() {
     if (!jogandoFlappy) return;
-    
+
+    // Fundo do espaço
     ctx.fillStyle = '#030305';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
+
+    // Estrelas de fundo
     ctx.fillStyle = 'rgba(255,255,255,0.3)';
     for (let i = 0; i < 20; i++) {
         ctx.fillRect((i * 45) % canvas.width, (i * 29) % canvas.height, 1.5, 1.5);
     }
 
+    // Aplica física de gravidade à nave
     nave.velocidade += nave.gravidade;
     nave.y += nave.velocidade;
 
-    if (nave.y + nave.altura > canvas.height || nave.y < 0) derrubarNave();
+    // CORREÇÃO: Mata o jogador se ele bater no teto ou no chão e para o loop imediatamente
+    if (nave.y + nave.altura > canvas.height || nave.y < 0) {
+        derrubarNave();
+        return; 
+    }
 
+    // Desenha a nave (triângulo futurista)
     ctx.fillStyle = '#00f2ff';
     ctx.beginPath();
     ctx.moveTo(nave.x + nave.largura, nave.y + nave.altura / 2);
@@ -108,33 +121,42 @@ function loopFlappy() {
     ctx.closePath();
     ctx.fill();
 
+    // Geração de obstáculos (pedras espaciais)
     if (frame % 90 === 0) {
-        let gap = 125;
+        let gap = 130;
         let altMin = 40;
         let altMax = canvas.height - gap - altMin;
         let topoAlt = Math.floor(Math.random() * (altMax - altMin + 1)) + altMin;
-        obstaculos.push({ x: canvas.width, topo: topoAlt, base: canvas.height - (topoAlt + gap), largura: 30, passou: false });
+        obstaculos.push({ x: canvas.width, topo: topoAlt, base: canvas.height - (topoAlt + gap), largura: 35, passou: false });
     }
 
+    // Gerencia e desenha os obstáculos
     for (let i = obstaculos.length - 1; i >= 0; i--) {
         let obs = obstaculos[i];
-        obs.x -= 3.5;
+        obs.x -= 3.5; // Velocidade de movimento do obstáculo
 
         ctx.fillStyle = '#ff0055';
+        // Obstáculo Superior
         ctx.fillRect(obs.x, 0, obs.largura, obs.topo);
+        // Obstáculo Inferior
         ctx.fillRect(obs.x, canvas.height - obs.base, obs.largura, obs.base);
 
-        if (nave.x < obs.x + obs.largura && nave.x + nave.largura > obs.x && 
-           (nave.y < obs.topo || nave.y + nave.altura > canvas.height - obs.base)) {
+        // CORREÇÃO: Caixa de colisão precisa precisa e fatal
+        if (nave.x < obs.x + obs.largura && 
+            nave.x + nave.largura > obs.x &&
+            (nave.y < obs.topo || nave.y + nave.altura > canvas.height - obs.base)) {
             derrubarNave();
+            return; // Interrompe o loop de renderização na hora
         }
 
+        // Marca pontuação ao passar com sucesso
         if (!obs.passou && obs.x + obs.largura < nave.x) {
             obs.passou = true;
             scoreFlappy++;
             document.getElementById('score').innerText = scoreFlappy;
         }
 
+        // Remove obstáculos fora da tela
         if (obs.x + obs.largura < 0) obstaculos.splice(i, 1);
     }
 
@@ -144,6 +166,7 @@ function loopFlappy() {
 
 function derrubarNave() {
     jogandoFlappy = false;
+    if (loopId) cancelAnimationFrame(loopId);
     document.getElementById('pontos-finais').innerText = scoreFlappy;
     document.getElementById('tela-gameover').classList.remove('no-display');
 }
@@ -176,7 +199,6 @@ function iniciarNovoQuiz10() {
 function renderizarQuestaoQuiz() {
     const dadosQuestao = bancoQuestoesQuiz[indiceQuestaoAtual];
     document.getElementById('quiz-pergunta-texto').innerText = dadosQuestao.p;
-    
     const containerOpcoes = document.getElementById('quiz-opcoes-container');
     containerOpcoes.innerHTML = "";
 
@@ -243,7 +265,6 @@ function votarFaccao(escolha) {
     boxAlerta.innerText = "✓ Transmissão de juramento criptografada e enviada para a central galáctica.";
     boxAlerta.classList.add('alerta-sucesso');
     boxAlerta.style.display = 'block';
-
     acionarHolograma(escolha);
 }
 
@@ -252,46 +273,13 @@ function acionarHolograma(lado) {
     const txt = document.getElementById('texto-animacao');
 
     if (lado === 'jedi') {
-        txt.innerText = "\"Que a Força esteja com você. O conhecimento deve ser compartilhado, nunca guardado.\" — Mestre Yoda";
+        txt.innerText = '""Que a Força esteja com você. O conhecimento deve ser compartilhado, nunca guardado."" — Mestre Yoda';
     } else if (lado === 'vader') {
-        txt.innerText = "\"Você não conhece o real poder do Lado Sombrio. Junte-se a nós ou enfrente a destruição.\" — Darth Vader";
+        txt.innerText = '""Você não conhece o real poder do Lado Sombrio. Junte-se a nós ou enfrente a destruição."" — Darth Vader';
     } else if (lado === 'mando') {
-        txt.innerText = "\"Armaduras protegem o corpo, mas a honra protege o clã. Este é o Caminho.\" — Din Djarin";
+        txt.innerText = '""Armaduras protegem o corpo, mas a honra protege o clã. Este é o Caminho."" — Din Djarin';
     }
     overlay.style.display = 'flex';
 }
 
 function fecharAnimacao() { document.getElementById('tela-animacao').style.display = 'none'; }
-
-// === MODAL INJETOR DE TEXTOS COMPLETO ===
-const dbArtigosTextos = {
-    djarin: {
-        t: "1. Quem é o Mandaloriano? A Trajetória de Din Djarin",
-        p: "<p>O protagonista da série, conhecido popularmente como 'O Mandaloriano', chama-se Din Djarin. Ele não nasceu no planeta Mandalore; na verdade, ele foi um 'enjeitado', uma criança órfã resgatada por guerreiros mandalorianos durante as Guerras Clônicas.</p><p>Criado sob as rígidas tradições de uma seita conhecida como a Tribo, ele se tornou um caçador de recompensas habilidoso e solitário, operando nas bordas externas da galáxia após a queda do Império Galáctico.</p><p>A trajetória de Din Djarin muda drasticamente quando ele aceita uma missão misteriosa que o leva a encontrar uma criatura da mesma espécie do mestre Yoda. Em vez de entregar o alvo para receber sua recompensa, o Mandaloriano decide quebrar o código da sua guilda para proteger a criança, iniciando uma jornada de transformação que o força a questionar suas próprias crenças e a assumir o papel de pai e protetor.</p>"
-    },
-    grogu: {
-        t: "2. O Fenômeno Grogu: De 'Baby Yoda' a Aprendiz Mandaloriano",
-        p: "<p>Batizado inicialmente pelo público como 'Baby Yoda', o personagem Grogu tornou-se um dos maiores fenômenos de cultura pop dos últimos anos. Ele pertence à mesma espécie misteriosa e rara do lendário Mestre Yoda e, apesar de sua aparência infantil e vulnerável, Grogu já viveu por mais de 50 anos e possui uma forte conexão com a Força, sendo capaz de mover objetos grandes e curar ferimentos graves.</p><p>Antes de encontrar Din Djarin, Grogu foi criado no Templo Jedi em Coruscant e precisou ser escondido após a Ordem 66. Ao longo de sua jornada na série, ele passa de um alvo indefeso a um aprendiz. Mesmo tendo a oportunidade de treinar com Luke Skywalker para se tornar um Jedi, Grogu escolhe retornar para os braços de seu protetor, sendo oficialmente adotado por Din Djarin e iniciando seu treinamento para seguir os costumes mandalorianos.</p>"
-    },
-    beskar: {
-        t: "3. A Armadura de Beskar: O Design Visual da Série",
-        p: "<p>Um dos elementos visuais mais marcantes e simbólicos de The Mandalorian é a armadura do protagonista, feita de Beskar. O Beskar é um metal extremamente raro e valioso, nativo do planeta Mandalore, conhecido por sua resistência lendária. Ele é capaz de suportar disparos de blasters e até mesmo resistir a golpes diretos de sabres de luz, o que torna os guerreiros mandalorianos oponentes temíveis.</p><p>No início da série, Din Djarin veste uma armadura remendada com peças de outros metais. Conforme ele cumpre missões perigosas, ele recebe placas de Beskar puro como pagamento, que são fundidas pela Armadora para criar seu traje prateado e reluzente. Além da proteção física, a evolução da armadura funciona como um indicador visual do status e das conquistas do personagem dentro da narrativa.</p>"
-    },
-    aliados: {
-        t: "4. Aliados e Inimigos de Peso na Galáxia",
-        p: "<p>A jornada do Mandaloriano é marcada por encontros com personagens que moldam o destino da galáxia. Entre os principais aliados está Bo-Katan Kryze, uma líder mandaloriana de linhagem real que busca unificar seu povo destruído e recuperar o trono de Mandalore. Outros aliados importantes incluem Greef Karga, o líder da guilda de caçadores de recompensa que se torna o magistrado de Nevarro, e a Armadora, que atua como a guia espiritual e técnica da seita de Din Djarin.</p><p>Do lado dos antagonistas, o principal perigo é representado por Moff Gideon, um ambicioso líder remanescente do Império Galáctico. Gideon lidera uma facção imperial secreta e busca capturar Grogu para realizar experimentos com seu sangue rico em 'Midi-chlorians'. Para consolidar seu poder, ele chega a empunhar o Sabre Sombrio (Darksaber), uma arma ancestral que simboliza o direito de governar o planeta Mandalore.</p>"
-    }
-};
-
-function abrirArtigo(chave) {
-    document.getElementById('modal-titulo').innerText = dbArtigosTextos[chave].t;
-    document.getElementById('modal-texto').innerHTML = dbArtigosTextos[chave].p;
-    document.getElementById('modal-artigo').style.display = 'flex';
-}
-
-function fecharArtigoModal() { document.getElementById('modal-artigo').style.display = 'none'; }
-
-window.onclick = function(e) {
-    const modal = document.getElementById('modal-artigo');
-    if (e.target === modal) modal.style.display = 'none';
-}
